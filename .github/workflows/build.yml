@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install dependencies
+      - name: Install system dependencies
         run: |
           sudo apt update
           sudo apt install -y python3-pip build-essential git zip unzip openjdk-17-jdk wget
@@ -32,16 +32,15 @@ jobs:
           yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses
           sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "platforms;android-31" "build-tools;31.0.0" "ndk;23.1.7779620"
 
-      - name: Install Buildozer and Cython
+      - name: Install Python build dependencies
         run: |
-          pip install --upgrade pip
-          pip install cython
-          pip install buildozer
+          python3 -m pip install --upgrade pip
+          python3 -m pip install --user cython buildozer
 
       - name: Build APK
         env:
           ANDROID_HOME: ${{ env.HOME }}/android-sdk
-          PATH: ${{ env.HOME }}/android-sdk/platform-tools:${{ env.HOME }}/android-sdk/cmdline-tools/latest/bin:$PATH
+          PATH: ${{ env.HOME }}/.local/bin:${{ env.HOME }}/android-sdk/platform-tools:${{ env.HOME }}/android-sdk/cmdline-tools/latest/bin:$PATH
         run: |
           buildozer android debug
 
