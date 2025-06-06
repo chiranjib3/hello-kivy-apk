@@ -17,10 +17,14 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Install dependencies
+      - name: Install system dependencies
         run: |
           sudo apt update
           sudo apt install -y python3-pip build-essential git zip unzip openjdk-17-jdk
+
+      - name: Install buildozer and Python deps
+        run: |
+          pip install cython
           pip install buildozer
 
       - name: Build APK
@@ -32,4 +36,5 @@ jobs:
         with:
           name: helloworld-apk
           path: bin/*.apk
+
 
