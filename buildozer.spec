@@ -1,4 +1,4 @@
-buildozer_spec_content = """
+spec_content = """
 [app]
 title = HelloWorld
 package.name = helloworld
@@ -15,5 +15,5 @@ log_level = 2
 warn_on_root = 1
 """
 
-with open("buildozer.spec", "w") as f:
-    f.write(buildozer_spec_content)
+with open("buildozer.spec", "w", encoding="utf-8") as f:
+    f.write(spec_content.strip())
